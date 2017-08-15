@@ -27,6 +27,8 @@ TheTabStyle.defaultProps = {
 TheTabStyle.data = (options) => {
   const {ThemeValues} = TheStyle
   const {
+    textColor = ThemeValues.textColor,
+    lightBackgroundColor = ThemeValues.lightBackgroundColor,
     dominantColor = ThemeValues.dominantColor,
     lightTextColor = ThemeValues.lightTextColor,
     lightBorderColor = ThemeValues.lightBorderColor
@@ -38,20 +40,24 @@ TheTabStyle.data = (options) => {
       alignItems: 'center',
       width: '100%',
       overflow: 'auto',
-      marginBottom: '-1px'
+      marginBottom: '-1px',
+      boxSizing: 'border-box',
+      padding: '0',
     },
     '.the-tab-body': {
       position: 'relative',
       width: '100%',
       overflow: 'hidden',
       boxSizing: 'border-box',
-      border: `1px solid ${lightBorderColor}`
+      border: `1px solid ${lightBorderColor}`,
+      background: 'white'
     },
     '.the-tab-body-inner': {
       display: 'flex',
       position: 'relative',
       boxSizing: 'border-box',
       marginLeft: '-1px',
+      marginTop: '-1px',
       '&.the-tab-body-inner-animating': {
         transition: 'transform 300ms'
       },
@@ -67,20 +73,42 @@ TheTabStyle.data = (options) => {
       boxSizing: 'border-box'
     },
     '.the-tab-button': {
-      fontSize: 'smaller',
-      background: 'white',
-      padding: '4px 8px',
-      borderRadius: '8px 8px 0 0',
-      backgroundColor: 'transparent',
-      margin: '0 -1px 0 0',
+      fontSize: 'small',
+      padding: '8px 16px',
+      backgroundColor: lightBackgroundColor,
+      borderRadius: '0',
+      margin: '0',
       color: lightTextColor,
       position: 'relative',
       borderColor: lightBorderColor,
+      borderBottom: 'none',
+      minHeight: '24px',
+      lineHeight: '1em',
+      cursor: 'pointer',
+      '&:hover': {
+        color: textColor
+      },
+      '&:active': {
+        boxShadow: 'none',
+        opacity: 0.8
+      },
       '&.the-tab-button-active': {
-        backgroundColor: dominantColor,
-        borderColor: dominantColor,
-        color: 'white',
-        zIndex: 4
+        borderColor: lightBorderColor,
+        background: 'white',
+        color: textColor,
+        opacity: 1,
+        zIndex: 4,
+        cursor: 'default'
+      },
+      '.the-tab-button-active-bar': {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        zIndex: 2,
+        right: 0,
+        height: '2px',
+        display: 'block',
+        background: dominantColor
       }
     }
   })

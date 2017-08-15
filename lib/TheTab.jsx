@@ -154,7 +154,10 @@ class TheTab extends React.PureComponent {
                  className={c('the-tab-button', className, {
                    'the-tab-button-active': active
                  })}
-      >{children}</TheButton>
+      >
+        {active && (<span className='the-tab-button-active-bar'/>)}
+        {children}
+      </TheButton>
     )
   }
 
