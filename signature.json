@@ -1,0 +1,25 @@
+{
+  "TheTab": {
+    "description": "Tab for the-components",
+    "displayName": "TheTab",
+    "methods": []
+  },
+  "TheTabStyle": {
+    "description": "Style for TheTab",
+    "displayName": "TheTabStyle",
+    "methods": [],
+    "props": {
+      "options": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "Style options",
+        "defaultValue": {
+          "value": "{}",
+          "computed": false
+        }
+      }
+    }
+  }
+}
