@@ -2,7 +2,125 @@
   "TheTab": {
     "description": "Tab for the-components",
     "displayName": "TheTab",
-    "methods": []
+    "methods": [
+      {
+        "name": "getBounds",
+        "docblock": null,
+        "modifiers": [],
+        "params": [],
+        "returns": null
+      },
+      {
+        "name": "handleDragStart",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "e",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "handleDragStop",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "e",
+            "type": null
+          },
+          {
+            "name": "data",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "moveTo",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "x",
+            "type": null
+          },
+          {
+            "name": "callback",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "Button",
+        "docblock": null,
+        "modifiers": [
+          "static"
+        ],
+        "params": [
+          {
+            "name": "props",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "Content",
+        "docblock": null,
+        "modifiers": [
+          "static"
+        ],
+        "params": [
+          {
+            "name": "props",
+            "type": null
+          }
+        ],
+        "returns": null
+      }
+    ],
+    "props": {
+      "activeIndex": {
+        "type": {
+          "name": "number"
+        },
+        "required": true,
+        "description": "Active tab index",
+        "defaultValue": {
+          "value": "0",
+          "computed": false
+        }
+      },
+      "buttons": {
+        "type": {
+          "name": "arrayOf",
+          "value": {
+            "name": "node"
+          }
+        },
+        "required": false,
+        "description": "Tab buttons",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
+      },
+      "onChange": {
+        "type": {
+          "name": "func"
+        },
+        "required": false,
+        "description": "Change handler",
+        "defaultValue": {
+          "value": "() => {}",
+          "computed": false
+        }
+      }
+    }
   },
   "TheTabStyle": {
     "description": "Style for TheTab",
