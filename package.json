@@ -1,6 +1,6 @@
 {
   "name": "the-tab",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tab for the-components",
   "main": "shim",
   "scripts": {
