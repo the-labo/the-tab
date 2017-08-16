@@ -4,7 +4,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import c from 'classnames'
 import { clone } from 'asobj'
-import { TheButton, TheButtonGroup } from 'the-button'
+import { TheButton } from 'the-button'
+import { TheSpin } from 'the-spin'
 import TheTabStyle from './TheTabStyle'
 import Draggable from 'react-draggable'
 import { htmlAttributesFor, eventHandlersFor } from 'the-component-util'
@@ -162,12 +163,21 @@ class TheTab extends React.PureComponent {
   }
 
   static Content (props) {
-    const {className, children} = props
+    const {className, children, spinning} = props
     return (
-      <div {...htmlAttributesFor(props, {except: ['className']})}
+      <div {...htmlAttributesFor(props, {except: ['className', 'spinning']})}
            {...eventHandlersFor(props, {except: []})}
-           className={c('the-content-content', className)}
+           className={c('the-tab-content', className)}
       >
+        {
+          spinning && (
+            <TheSpin enabled
+                     cover
+                     className='the-tab-content-spin'
+            />
+          )
+        }
+
         {children}
       </div>
     )

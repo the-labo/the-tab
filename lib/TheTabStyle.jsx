@@ -64,7 +64,7 @@ TheTabStyle.data = (options) => {
         transition: 'none'
       }
     },
-    '.the-content-content': {
+    '.the-tab-content': {
       width: '100%',
       border: `1px solid ${lightBorderColor}`,
       marginRight: '-1px',
@@ -72,6 +72,7 @@ TheTabStyle.data = (options) => {
       boxSizing: 'border-box',
       borderTop: 'none',
       borderBottom: 'none',
+      position: 'relative',
       '&:first-child': {
         borderLeft: 'none'
       },

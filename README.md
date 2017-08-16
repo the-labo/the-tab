@@ -77,13 +77,14 @@ Usage
 import React from 'react'
 import { TheTab, TheTabStyle } from 'the-tab'
 import { TheButtonStyle } from 'the-button'
+import { TheSpinStyle } from 'the-spin'
 
 class ExampleComponent extends React.PureComponent {
   constructor (props) {
     super(props)
     const s = this
     s.state = {
-      activeIndex: 2
+      activeIndex: 1
     }
   }
 
@@ -92,6 +93,7 @@ class ExampleComponent extends React.PureComponent {
     return (
       <div>
         <TheButtonStyle/>
+        <TheSpinStyle/>
         <TheTabStyle/>
         <TheTab activeIndex={s.state.activeIndex}
                 onChange={({activeIndex}) => s.setState({activeIndex})}
@@ -99,7 +101,7 @@ class ExampleComponent extends React.PureComponent {
         >
           <TheTab.Content> This is Content 01 </TheTab.Content>
           <TheTab.Content> This is Content 02 </TheTab.Content>
-          <TheTab.Content> This is Content 03 </TheTab.Content>
+          <TheTab.Content spinning> This is Content 03 </TheTab.Content>
         </TheTab>
       </div>
 
