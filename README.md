@@ -125,6 +125,13 @@ Components
 
 Tab for the-components
 
+**Props**
+
+| Name | Type | Description | Default |
+| --- | --- | ---- | ---- |
+| `activeIndex` | number  | Active tab index | `0` |
+| `buttons` | arrayOf node | Tab buttons | `[]` |
+| `onChange` | func  | Change handler | `() => {}` |
 
 ### TheTabStyle
 

@@ -56,7 +56,6 @@ TheTabStyle.data = (options) => {
       display: 'flex',
       position: 'relative',
       boxSizing: 'border-box',
-      marginLeft: '-1px',
       marginTop: '-1px',
       '&.the-tab-body-inner-animating': {
         transition: 'transform 300ms'
@@ -70,7 +69,15 @@ TheTabStyle.data = (options) => {
       border: `1px solid ${lightBorderColor}`,
       marginRight: '-1px',
       padding: '8px',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      borderTop: 'none',
+      borderBottom: 'none',
+      '&:first-child': {
+        borderLeft: 'none'
+      },
+      '&:last-child': {
+        borderRight: 'none'
+      }
     },
     '.the-tab-button': {
       fontSize: 'small',

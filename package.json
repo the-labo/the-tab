@@ -41,7 +41,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
-    "the-component-demo": "^2.0.14",
+    "the-component-demo": "^2.0.15",
     "the-script-build": "^1.3.4",
     "the-script-doc": "^1.0.2",
     "the-script-release": "^1.0.6",
