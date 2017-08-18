@@ -4,6 +4,18 @@
     "displayName": "TheTab",
     "methods": [
       {
+        "name": "resize",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "activeIndex",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
         "name": "getBounds",
         "docblock": null,
         "modifiers": [],
@@ -17,6 +29,22 @@
         "params": [
           {
             "name": "e",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "handleDragDrag",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "e",
+            "type": null
+          },
+          {
+            "name": "data",
             "type": null
           }
         ],
@@ -49,6 +77,18 @@
           },
           {
             "name": "callback",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "moveAmountFor",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "x",
             "type": null
           }
         ],
