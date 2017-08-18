@@ -50,12 +50,14 @@ TheTabStyle.data = (options) => {
       overflow: 'hidden',
       boxSizing: 'border-box',
       border: `1px solid ${lightBorderColor}`,
-      background: 'white'
+      background: 'white',
+      transition: 'height 300ms'
     },
     '.the-tab-body-inner': {
       display: 'flex',
       position: 'relative',
       boxSizing: 'border-box',
+      alignItems: 'flex-start',
       marginTop: '-1px',
       '&.the-tab-body-inner-animating': {
         transition: 'transform 300ms'
@@ -64,11 +66,15 @@ TheTabStyle.data = (options) => {
         transition: 'none'
       }
     },
+    '.the-tab-content-wrap': {
+      width: '100%'
+    },
     '.the-tab-content': {
       width: '100%',
       border: `1px solid ${lightBorderColor}`,
       marginRight: '-1px',
       padding: '8px',
+      transition: 'height 300ms',
       boxSizing: 'border-box',
       borderTop: 'none',
       borderBottom: 'none',

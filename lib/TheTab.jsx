@@ -19,9 +19,12 @@ class TheTab extends React.PureComponent {
     const s = this
     s.state = {
       draggingPosition: null,
-      animating: false
+      animating: false,
+      bodyHeight: 'auto',
+      nextIndex: props.activeIndex || -1
     }
     s.body = null
+    s.contentWraps = []
     s.movingTimer = -1
   }
 
@@ -30,7 +33,9 @@ class TheTab extends React.PureComponent {
     const {props, state, body} = s
     const {
       draggingPosition,
-      animating
+      animating,
+      bodyHeight,
+      nextIndex
     } = state
     const {
       className,
@@ -50,17 +55,19 @@ class TheTab extends React.PureComponent {
             buttons.map((text, i) => (
               <TheTab.Button key={i}
                              onClick={() => onChange({activeIndex: i})}
-                             active={activeIndex === i}
+                             active={nextIndex === i}
               >{text}</TheTab.Button>
             ))
           }
         </div>
         <div className='the-tab-body'
              ref={(body) => {s.body = body}}
+             style={{height: bodyHeight}}
         >
           <Draggable axis='x'
                      position={draggingPosition}
                      onStart={(e, data) => s.handleDragStart(e, data)}
+                     onDrag={(e, data) => s.handleDragDrag(e, data)}
                      onStop={(e, data) => s.handleDragStop(e, data)}
                      bounds={s.getBounds()}
           >
@@ -72,7 +79,17 @@ class TheTab extends React.PureComponent {
                    width: `${count * 100}%`
                  }}
             >
-              {children}
+              {
+                React.Children.map(children, (child, i) => (
+                  <div key={i}
+                       ref={(contentWrap) => {s.contentWraps[i] = contentWrap}}
+                       className={c('the-tab-content-wrap', {
+                         'the-tab-content-wrap-active': i === activeIndex
+                       })}>
+                    {child}
+                  </div>
+                ))
+              }
             </div>
           </Draggable>
         </div>
@@ -80,8 +97,29 @@ class TheTab extends React.PureComponent {
     )
   }
 
-  componentWillReceiveProps () {
+  componentDidMount () {
+    const s = this
+    s.resize(s.props.activeIndex)
+  }
 
+  componentWillReceiveProps (nextProps) {
+    const s = this
+    const {props} = s
+
+    const nextIndex = nextProps.activeIndex
+    if (props.activeIndex !== nextIndex) {
+      s.setState({nextIndex})
+      s.resize(nextIndex)
+    }
+  }
+
+  resize (activeIndex) {
+    const s = this
+    const contentWrap = s.contentWraps[activeIndex]
+    const bodyHeight = contentWrap && contentWrap.offsetHeight
+    if (bodyHeight) {
+      s.setState({bodyHeight})
+    }
   }
 
   getBounds () {
@@ -101,9 +139,26 @@ class TheTab extends React.PureComponent {
     const s = this
     clearTimeout(s.movingTimer)
     s.setState({
+      nextIndex: s.props.activeIndex,
       draggingPosition: null,
       animating: false
     })
+  }
+
+  handleDragDrag (e, data) {
+    const s = this
+    const {body} = s
+    if (!body) {
+      return
+    }
+    const {activeIndex} = s.props
+    const {x} = data
+    const amount = s.moveAmountFor(x)
+    const nextIndex = activeIndex + amount
+    if (s.state.nextIndex !== nextIndex) {
+      s.resize(nextIndex)
+      s.setState({nextIndex})
+    }
   }
 
   handleDragStop (e, data) {
@@ -113,17 +168,16 @@ class TheTab extends React.PureComponent {
       return
     }
     const {x} = data
-    const threshold = Math.min(80, body.offsetWidth / 2)
-    const {buttons, activeIndex, onChange} = s.props
-    const count = buttons.length
-    const toLeft = (threshold < x) && (0 < activeIndex)
+    const amount = s.moveAmountFor(x)
+    const {activeIndex, onChange} = s.props
+    const toLeft = amount < 0
     if (toLeft) {
       s.moveTo(body.offsetWidth, () =>
         onChange({activeIndex: activeIndex - 1})
       )
       return
     }
-    const toRight = x < (threshold * -1) && (activeIndex < count - 1)
+    const toRight = amount > 0
     if (toRight) {
       s.moveTo(body.offsetWidth * -1, () =>
         onChange({activeIndex: activeIndex + 1})
@@ -145,6 +199,23 @@ class TheTab extends React.PureComponent {
       })
       callback && callback()
     }, 300)
+  }
+
+  moveAmountFor (x) {
+    const s = this
+    const {body} = s
+    const threshold = Math.min(80, body.offsetWidth / 2)
+    const {buttons, activeIndex} = s.props
+    const count = buttons.length
+    const toLeft = (threshold < x) && (0 < activeIndex)
+    if (toLeft) {
+      return -1
+    }
+    const toRight = x < (threshold * -1) && (activeIndex < count - 1)
+    if (toRight) {
+      return 1
+    }
+    return 0
   }
 
   static Button (props) {
