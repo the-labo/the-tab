@@ -55,7 +55,7 @@ class TheTab extends React.PureComponent {
             buttons.map((text, i) => (
               <TheTab.Button key={i}
                              onClick={() => onChange({activeIndex: i})}
-                             active={nextIndex === i}
+                             active={activeIndex === i}
               >{text}</TheTab.Button>
             ))
           }
