@@ -42,7 +42,7 @@ TheTabStyle.data = (options) => {
       overflow: 'auto',
       marginBottom: '-1px',
       boxSizing: 'border-box',
-      padding: '0',
+      padding: '0'
     },
     '.the-tab-body': {
       position: 'relative',
@@ -88,7 +88,8 @@ TheTabStyle.data = (options) => {
     },
     '.the-tab-button': {
       fontSize: 'small',
-      padding: '8px 16px',
+      padding: '8px',
+      width: '100%',
       backgroundColor: lightBackgroundColor,
       borderRadius: '0',
       margin: '0',
@@ -99,6 +100,9 @@ TheTabStyle.data = (options) => {
       minHeight: '24px',
       lineHeight: '1em',
       cursor: 'pointer',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipses',
       '&:hover': {
         color: textColor
       },
