@@ -107,7 +107,7 @@ class TheTab extends React.PureComponent {
     const {props} = s
 
     const nextIndex = nextProps.activeIndex
-    const updateNextIndex = props.activeIndex !== nextIndex
+    const updateNextIndex = (nextIndex === null) || (props.activeIndex !== nextIndex)
     if (updateNextIndex) {
       s.setState({nextIndex})
       s.resize(nextIndex)
