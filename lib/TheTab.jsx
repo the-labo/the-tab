@@ -26,6 +26,7 @@ class TheTab extends React.PureComponent {
     s.body = null
     s.contentWraps = []
     s.movingTimer = -1
+    s.resizeTimer = -1
   }
 
   render () {
@@ -100,6 +101,8 @@ class TheTab extends React.PureComponent {
   componentDidMount () {
     const s = this
     s.resize(s.props.activeIndex)
+
+    s.resizeTimer = setInterval(() => s.resize(s.state.nextIndex), 300)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -112,6 +115,11 @@ class TheTab extends React.PureComponent {
       s.setState({nextIndex})
       s.resize(nextIndex)
     }
+  }
+
+  componentWillUnmount () {
+    const s = this
+    clearInterval(s.resizeTimer)
   }
 
   resize (activeIndex) {
