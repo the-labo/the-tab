@@ -21,7 +21,7 @@ class TheTab extends React.PureComponent {
       draggingPosition: null,
       animating: false,
       bodyHeight: 'auto',
-      nextIndex: props.activeIndex || -1
+      nextIndex: props.activeIndex || 0
     }
     s.body = null
     s.contentWraps = []
@@ -107,7 +107,8 @@ class TheTab extends React.PureComponent {
     const {props} = s
 
     const nextIndex = nextProps.activeIndex
-    if (props.activeIndex !== nextIndex) {
+    const updateNextIndex = props.activeIndex !== nextIndex
+    if (updateNextIndex) {
       s.setState({nextIndex})
       s.resize(nextIndex)
     }
