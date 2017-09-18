@@ -62,7 +62,7 @@ class TheTab extends React.PureComponent {
           }
         </div>
         <div className='the-tab-body'
-             ref={(body) => {s.body = body}}
+             ref={(body) => { s.body = body }}
              style={{height: bodyHeight}}
         >
           <Draggable axis='x'
@@ -120,6 +120,7 @@ class TheTab extends React.PureComponent {
   componentWillUnmount () {
     const s = this
     clearInterval(s.resizeTimer)
+    clearTimeout(s.movingTimer)
   }
 
   resize (activeIndex) {
