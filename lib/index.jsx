@@ -1,7 +1,7 @@
 /**
  * Tab for the-components
  * @module the-tab
- * @version 1.1.6
+ * @version 1.1.7
  */
 'use strict'
 

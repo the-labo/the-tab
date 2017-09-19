@@ -13,7 +13,7 @@ import { htmlAttributesFor, eventHandlersFor } from 'the-component-util'
 /**
  * Tab for the-components
  */
-class TheTab extends React.PureComponent {
+class TheTab extends React.Component {
   constructor (props) {
     super(props)
     const s = this
@@ -70,7 +70,7 @@ class TheTab extends React.PureComponent {
                      onStart={(e, data) => s.handleDragStart(e, data)}
                      onDrag={(e, data) => s.handleDragDrag(e, data)}
                      onStop={(e, data) => s.handleDragStop(e, data)}
-                     bounds={s.getBounds()}w
+                     bounds={s.getBounds()}
           >
             <div className={c('the-tab-body-inner', {
               'the-tab-body-inner-animating': animating,
