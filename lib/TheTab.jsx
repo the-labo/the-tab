@@ -13,7 +13,7 @@ import { htmlAttributesFor, eventHandlersFor } from 'the-component-util'
 /**
  * Tab for the-components
  */
-class TheTab extends React.Component {
+class TheTab extends React.PureComponent {
   constructor (props) {
     super(props)
     const s = this
