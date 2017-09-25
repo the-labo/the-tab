@@ -127,7 +127,8 @@ class TheTab extends React.Component {
     const s = this
     const contentWrap = s.contentWraps[activeIndex]
     const bodyHeight = contentWrap && contentWrap.offsetHeight
-    if (bodyHeight) {
+    const needsUpdateState = bodyHeight && (bodyHeight !== s.state.bodyHeight)
+    if (needsUpdateState) {
       s.setState({bodyHeight})
     }
   }
