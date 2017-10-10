@@ -86,7 +86,9 @@ class TheTab extends React.Component {
                        ref={(contentWrap) => {s.contentWraps[i] = contentWrap}}
                        className={c('the-tab-content-wrap', {
                          'the-tab-content-wrap-active': i === activeIndex
-                       })}>
+                       })}
+                       style={{width: `${Math.ceil(100 / count)}%`}}
+                  >
                     {child}
                   </div>
                 ))
