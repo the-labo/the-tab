@@ -71,6 +71,8 @@ $ npm install the-tab --save
 Usage
 ---------
 
+[Live Demo](https://the-labo.github.io/the-tab/doc/demo/index.html#/) is hosted on GitHub Page
+
 ```javascript
 'use strict'
 
