@@ -83,7 +83,19 @@
         "returns": null
       },
       {
-        "name": "moveAmountFor",
+        "name": "movingAmountFor",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "x",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "movingRateFor",
         "docblock": null,
         "modifiers": [],
         "params": [
