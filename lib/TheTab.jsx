@@ -8,6 +8,7 @@ import { TheButton } from 'the-button'
 import { TheSpin } from 'the-spin'
 import TheTabStyle from './TheTabStyle'
 import Draggable from 'react-draggable'
+import chopcal from 'chopcal'
 import { htmlAttributesFor, eventHandlersFor } from 'the-component-util'
 
 /**
@@ -21,7 +22,8 @@ class TheTab extends React.Component {
       draggingPosition: null,
       animating: false,
       bodyHeight: 'auto',
-      nextIndex: props.activeIndex || 0
+      nextIndex: props.activeIndex || 0,
+      movingRate: 0
     }
     s.body = null
     s.contentWraps = []
@@ -36,7 +38,8 @@ class TheTab extends React.Component {
       draggingPosition,
       animating,
       bodyHeight,
-      nextIndex
+      nextIndex,
+      movingRate
     } = state
     const {
       className,
@@ -57,6 +60,7 @@ class TheTab extends React.Component {
               <TheTab.Button key={i}
                              onClick={() => onChange({activeIndex: i})}
                              active={nextIndex === i}
+                             movingRate={activeIndex === i ? movingRate : 0}
               >{text}</TheTab.Button>
             ))
           }
@@ -166,11 +170,16 @@ class TheTab extends React.Component {
     }
     const {activeIndex} = s.props
     const {x} = data
-    const amount = s.moveAmountFor(x)
+    const amount = s.movingAmountFor(x)
     const nextIndex = activeIndex + amount
     if (s.state.nextIndex !== nextIndex) {
       s.resize(nextIndex)
       s.setState({nextIndex})
+    }
+
+    const movingRate = s.movingRateFor(x)
+    if (s.state.movingRate !== movingRate) {
+      s.setState({movingRate})
     }
   }
 
@@ -181,7 +190,7 @@ class TheTab extends React.Component {
       return
     }
     const {x} = data
-    const amount = s.moveAmountFor(x)
+    const amount = s.movingAmountFor(x)
     const {activeIndex, onChange} = s.props
     const toLeft = amount < 0
     if (toLeft) {
@@ -204,7 +213,10 @@ class TheTab extends React.Component {
     const s = this
     s.setState({animating: true})
     clearTimeout(s.movingTimer)
-    s.setState({draggingPosition: {x, y: 0}})
+    s.setState({
+      movingRate: 0,
+      draggingPosition: {x, y: 0}
+    })
     s.movingTimer = setTimeout(() => {
       s.setState({
         animating: false,
@@ -214,7 +226,7 @@ class TheTab extends React.Component {
     }, 300)
   }
 
-  moveAmountFor (x) {
+  movingAmountFor (x) {
     const s = this
     const {body} = s
     const threshold = Math.min(80, body.offsetWidth / 2)
@@ -231,8 +243,14 @@ class TheTab extends React.Component {
     return 0
   }
 
+  movingRateFor (x) {
+    const s = this
+    const {body} = s
+    return chopcal.floor(x / body.offsetWidth, 0.001)
+  }
+
   static Button (props) {
-    const {className, children, active} = props
+    const {className, children, active, movingRate} = props
     const buttonProps = clone(props, {without: ['className', 'active']})
     return (
       <TheButton {...buttonProps}
@@ -240,7 +258,11 @@ class TheTab extends React.Component {
                    'the-tab-button-active': active
                  })}
       >
-        {active && (<span className='the-tab-button-active-bar'/>)}
+        {active && (
+          <span className='the-tab-button-active-bar'
+                style={active && {transform: `translateX(${movingRate * -100}%)`}}
+          />
+        )}
         {children}
       </TheButton>
     )

@@ -1,6 +1,6 @@
 {
   "name": "the-tab",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Tab for the-components",
   "main": "shim",
   "scripts": {
@@ -30,6 +30,7 @@
   "homepage": "https://github.com/the-labo/the-tab#readme",
   "dependencies": {
     "asobj": "^2.0.1",
+    "chopcal": "^3.0.1",
     "classnames": "^2.2.5",
     "prop-types": "^15.6.0",
     "react-draggable": "^3.0.3",
@@ -52,11 +53,11 @@
     "the-templates": "^2.0.0"
   },
   "peerDependencies": {
-    "react": ">=15",
-    "react-dom": ">=15"
+    "react": ">=16",
+    "react-dom": ">=16"
   },
   "engines": {
-    "node": ">=6",
+    "node": ">=8",
     "npm": ">=4"
   }
 }

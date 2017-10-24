@@ -29,6 +29,7 @@ TheTabStyle.data = (options) => {
   const {
     textColor = ThemeValues.textColor,
     lightBackgroundColor = ThemeValues.lightBackgroundColor,
+    backgroundColor = ThemeValues.backgroundColor,
     dominantColor = ThemeValues.dominantColor,
     lightTextColor = ThemeValues.lightTextColor,
     lightBorderColor = ThemeValues.lightBorderColor
@@ -40,7 +41,6 @@ TheTabStyle.data = (options) => {
       alignItems: 'center',
       width: '100%',
       overflow: 'auto',
-      marginBottom: '-1px',
       boxSizing: 'border-box',
       padding: '0'
     },
@@ -50,7 +50,7 @@ TheTabStyle.data = (options) => {
       overflow: 'hidden',
       boxSizing: 'border-box',
       border: `1px solid ${lightBorderColor}`,
-      background: 'white',
+      backgroundColor,
       transition: 'height 300ms'
     },
     '.the-tab-body-inner': {
@@ -88,45 +88,44 @@ TheTabStyle.data = (options) => {
     },
     '.the-tab-button': {
       fontSize: 'small',
-      padding: '8px',
+      padding: '12px 4px',
       width: '100%',
-      backgroundColor: lightBackgroundColor,
-      borderRadius: '0',
+      backgroundColor,
       margin: '0',
       color: lightTextColor,
       position: 'relative',
-      borderColor: lightBorderColor,
-      borderBottom: 'none',
       minHeight: '24px',
       lineHeight: '1em',
       cursor: 'pointer',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipses',
+      border: 'none',
+      borderRadius: 0,
+      boxShadow: 'none',
       '&:hover': {
+        boxShadow: 'none',
         color: textColor
       },
       '&:active': {
-        boxShadow: 'none',
-        opacity: 0.8
+        boxShadow: 'none'
       },
       '&.the-tab-button-active': {
-        borderColor: lightBorderColor,
-        background: 'white',
-        color: textColor,
+        color: dominantColor,
         opacity: 1,
-        zIndex: 4,
-        cursor: 'default'
+        cursor: 'default',
+        overflow: 'visible'
       },
       '.the-tab-button-active-bar': {
         position: 'absolute',
         left: 0,
-        top: 0,
+        bottom: 0,
         zIndex: 2,
         right: 0,
         height: '2px',
         display: 'block',
-        background: dominantColor
+        background: dominantColor,
+        transition: 'transform 100ms'
       }
     }
   })
