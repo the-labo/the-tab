@@ -30,6 +30,10 @@
           {
             "name": "e",
             "type": null
+          },
+          {
+            "name": "data",
+            "type": null
           }
         ],
         "returns": null
@@ -169,6 +173,28 @@
         "description": "Change handler",
         "defaultValue": {
           "value": "() => {}",
+          "computed": false
+        }
+      },
+      "handleSelector": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "Select for drag handler",
+        "defaultValue": {
+          "value": "null",
+          "computed": false
+        }
+      },
+      "cancelSelector": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "Select for cancel drag",
+        "defaultValue": {
+          "value": "'a:link,.the-link,.the-button'",
           "computed": false
         }
       }
