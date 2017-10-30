@@ -26,8 +26,15 @@ class ExampleComponent extends React.PureComponent {
                 buttons={['Tab01', 'Tab02', 'Tab03']}
         >
           <TheTab.Content style={{height: '100px'}}> This is Content 01 </TheTab.Content>
-          <TheTab.Content style={{height: '300px'}}> This is Content 02 </TheTab.Content>
-          <TheTab.Content spinning> This is Content 03 </TheTab.Content>
+          <TheTab.Content style={{height: '300px'}}>
+            This is Content 02
+            <br/>
+            <a href="http://example.com">With some link</a>
+          </TheTab.Content>
+          <TheTab.Content spinning>
+            This is Content 03
+
+          </TheTab.Content>
         </TheTab>
       </div>
 

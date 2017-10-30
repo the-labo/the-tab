@@ -46,7 +46,9 @@ class TheTab extends React.Component {
       children,
       buttons,
       activeIndex,
-      onChange
+      onChange,
+      handleSelector,
+      cancelSelector
     } = props
     const count = buttons.length
     return (
@@ -75,6 +77,8 @@ class TheTab extends React.Component {
                      onDrag={(e, data) => s.handleDragDrag(e, data)}
                      onStop={(e, data) => s.handleDragStop(e, data)}
                      bounds={s.getBounds()}
+                     handle={handleSelector}
+                     cancel={cancelSelector}
           >
             <div className={c('the-tab-body-inner', {
               'the-tab-body-inner-animating': animating,
@@ -152,18 +156,21 @@ class TheTab extends React.Component {
     return bounds
   }
 
-  handleDragStart (e) {
+  handleDragStart (e, data) {
     const s = this
+    const {onDragStart} = s.props
     clearTimeout(s.movingTimer)
     s.setState({
       nextIndex: s.props.activeIndex,
       draggingPosition: null,
       animating: false
     })
+    onDragStart && onDragStart(e, data)
   }
 
   handleDragDrag (e, data) {
     const s = this
+    const {onDrag} = s.props
     const {body} = s
     if (!body) {
       return
@@ -181,6 +188,7 @@ class TheTab extends React.Component {
     if (s.state.movingRate !== movingRate) {
       s.setState({movingRate})
     }
+    onDrag && onDrag(e, data)
   }
 
   handleDragStop (e, data) {
@@ -189,6 +197,7 @@ class TheTab extends React.Component {
     if (!body) {
       return
     }
+    const {onDragStop} = s.props
     const {x} = data
     const amount = s.movingAmountFor(x)
     const {activeIndex, onChange} = s.props
@@ -207,6 +216,8 @@ class TheTab extends React.Component {
       return
     }
     s.moveTo(0)
+
+    onDragStop && onDragStop(e, data)
   }
 
   moveTo (x, callback) {
@@ -299,13 +310,19 @@ TheTab.propTypes = {
   /** Tab buttons */
   buttons: PropTypes.arrayOf(PropTypes.node),
   /** Change handler */
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  /** Select for drag handler */
+  handleSelector: PropTypes.string,
+  /** Select for cancel drag */
+  cancelSelector: PropTypes.string
 }
 
 TheTab.defaultProps = {
   activeIndex: 0,
   buttons: [],
-  onChange: () => {}
+  onChange: () => {},
+  handleSelector: null,
+  cancelSelector: 'a:link,.the-link,.the-button'
 }
 
 TheTab.displayName = 'TheTab'
