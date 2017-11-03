@@ -143,6 +143,8 @@ Tab for the-components
 | `activeIndex` | number  | Active tab index | `0` |
 | `buttons` | arrayOf node | Tab buttons | `[]` |
 | `onChange` | func  | Change handler | `() => {}` |
+| `handleSelector` | string  | Select for drag handler | `null` |
+| `cancelSelector` | string  | Select for cancel drag | `''` |
 
 ### TheTabStyle
 

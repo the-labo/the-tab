@@ -322,7 +322,7 @@ TheTab.defaultProps = {
   buttons: [],
   onChange: () => {},
   handleSelector: null,
-  cancelSelector: 'a:link,.the-link,.the-button'
+  cancelSelector: ''
 }
 
 TheTab.displayName = 'TheTab'

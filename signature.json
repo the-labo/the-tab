@@ -194,7 +194,7 @@
         "required": false,
         "description": "Select for cancel drag",
         "defaultValue": {
-          "value": "'a:link,.the-link,.the-button'",
+          "value": "''",
           "computed": false
         }
       }
