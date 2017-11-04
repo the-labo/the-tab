@@ -38,6 +38,19 @@ class ExampleComponent extends React.PureComponent {
           <TheTab.Content>
             This is Content 04
 
+
+            <div style={{overflow: 'auto', border: '2px solid #AAA'}}>
+              <div style={{
+                width: '1200px',
+                whiteSpace: 'nowrap',
+                padding: '22px',
+                fontSize: '2em'
+              }}>
+                <pre>
+              This is a long long long long long long long long long long long long long long long long long long long long long long long long long long long long content
+                </pre>
+              </div>
+            </div>
           </TheTab.Content>
         </TheTab>
       </div>
