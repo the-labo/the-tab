@@ -99,6 +99,18 @@
         "returns": null
       },
       {
+        "name": "scrollHeader",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "amount",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
         "name": "Button",
         "docblock": null,
         "modifiers": [

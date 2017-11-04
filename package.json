@@ -33,7 +33,6 @@
     "chopcal": "^3.0.1",
     "classnames": "^2.2.5",
     "prop-types": "^15.6.0",
-    "react-draggable": "^3.0.3",
     "the-button": "^2.0.4",
     "the-component-util": "^2.1.0",
     "the-spin": "^2.0.0",

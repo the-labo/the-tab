@@ -7,7 +7,6 @@ import { clone } from 'asobj'
 import { TheButton } from 'the-button'
 import { TheSpin } from 'the-spin'
 import TheTabStyle from './TheTabStyle'
-import Draggable from 'react-draggable'
 import chopcal from 'chopcal'
 import { htmlAttributesFor, eventHandlersFor } from 'the-component-util'
 
@@ -34,7 +33,9 @@ class TheTab extends React.Component {
       movingRate: 0,
       translateX: 0
     }
+    s.header = null
     s.body = null
+    s.buttons = {}
     s.contentWraps = []
     s.movingTimer = -1
     s.resizeTimer = -1
@@ -70,7 +71,8 @@ class TheTab extends React.Component {
            {...eventHandlersFor(props, {except: []})}
            className={c('the-tab', className)}
       >
-        <div className='the-tab-header'>
+        <div className='the-tab-header'
+             ref={(header) => { s.header = header }}>
           {
             buttons.map((text, i) => (
               <TheTab.Button key={i}
@@ -172,20 +174,21 @@ class TheTab extends React.Component {
 
   handleTouchStart (e) {
     const s = this
+    const {header} = s
     s.touchPoint = pointFromTouchEvent(e)
     clearTimeout(s.movingTimer)
     s.setState({
       nextIndex: s.props.activeIndex,
       animating: false
     })
+    s.buttons = [
+      ...header.querySelectorAll('.the-tab-button')
+    ]
   }
 
   handleTouchMove (e) {
     const s = this
-    const {body} = s
-    if (!body) {
-      return
-    }
+    const {header, buttons} = s
     const point = pointFromTouchEvent(e)
     if (!s.touchPoint) {
       s.touchPoint = point
@@ -203,6 +206,7 @@ class TheTab extends React.Component {
 
       const amount = s.movingAmountFor(translateX)
       const nextIndex = activeIndex + amount
+
       if (s.state.nextIndex !== nextIndex) {
         s.resize(nextIndex)
         s.setState({nextIndex})
@@ -219,9 +223,6 @@ class TheTab extends React.Component {
   handleTouchEnd (e) {
     const s = this
     const {body} = s
-    if (!body) {
-      return
-    }
     const {translateX} = s.state
     const amount = s.movingAmountFor(translateX)
     const {activeIndex, onChange} = s.props
@@ -245,6 +246,7 @@ class TheTab extends React.Component {
 
   moveTo (x, callback) {
     const s = this
+    const {header} = s
     s.setState({animating: true})
     clearTimeout(s.movingTimer)
     s.setState({
@@ -281,6 +283,18 @@ class TheTab extends React.Component {
     const s = this
     const {body} = s
     return chopcal.floor(x / body.offsetWidth, 0.001)
+  }
+
+  scrollHeader (amount) {
+    const s = this
+    if (s.headerScrolling) {
+      return
+    }
+    s.headerScrolling = true
+    setTimeout(() => {
+      s.header.scrollLeft += amount
+      s.headerScrolling = false
+    }, 10)
   }
 
   static Button (props) {
