@@ -19,6 +19,18 @@ const pointFromTouchEvent = (e) => {
   return {x, y}
 }
 
+const sourceElementScrollFor = (e) => {
+  let target = e.target || e.srcElement
+  let left = 0
+  let top = 0
+  while (target) {
+    left += target.scrollLeft
+    top += target.scrollTop
+    target = target.parentElement
+  }
+  return {left, top}
+}
+
 /**
  * Tab for the-components
  */
@@ -39,7 +51,9 @@ class TheTab extends React.Component {
     s.contentWraps = []
     s.movingTimer = -1
     s.resizeTimer = -1
-
+    s.touchedScroll = null
+    s.touchPoint = null
+    s.touchMoveCount = 0
     s.touchHandlers = {
       'touchstart': s.handleTouchStart.bind(s),
       'touchmove': s.handleTouchMove.bind(s),
@@ -175,7 +189,9 @@ class TheTab extends React.Component {
   handleTouchStart (e) {
     const s = this
     const {header} = s
+    s.touchedScroll = sourceElementScrollFor(e)
     s.touchPoint = pointFromTouchEvent(e)
+    s.touchMoveCount = 0
     clearTimeout(s.movingTimer)
     s.setState({
       nextIndex: s.props.activeIndex,
@@ -189,6 +205,18 @@ class TheTab extends React.Component {
   handleTouchMove (e) {
     const s = this
     const {header, buttons} = s
+    const touchedScroll = sourceElementScrollFor(e)
+    const scrolled = s.touchedScroll.left !== touchedScroll.left
+    if (scrolled) {
+      return
+    }
+    s.touchedScroll = touchedScroll
+    const isFirstMove = s.touchMoveCount === 0
+    s.touchMoveCount++
+    if (isFirstMove) {
+      return
+    }
+
     const point = pointFromTouchEvent(e)
     if (!s.touchPoint) {
       s.touchPoint = point
@@ -242,6 +270,7 @@ class TheTab extends React.Component {
     }
     s.moveTo(0)
     s.touchPoint = null
+    s.touchedScroll = null
   }
 
   moveTo (x, callback) {
