@@ -23,48 +23,36 @@
         "returns": null
       },
       {
-        "name": "handleDragStart",
+        "name": "handleTouchStart",
         "docblock": null,
         "modifiers": [],
         "params": [
           {
             "name": "e",
-            "type": null
-          },
-          {
-            "name": "data",
             "type": null
           }
         ],
         "returns": null
       },
       {
-        "name": "handleDragDrag",
+        "name": "handleTouchMove",
         "docblock": null,
         "modifiers": [],
         "params": [
           {
             "name": "e",
-            "type": null
-          },
-          {
-            "name": "data",
             "type": null
           }
         ],
         "returns": null
       },
       {
-        "name": "handleDragStop",
+        "name": "handleTouchEnd",
         "docblock": null,
         "modifiers": [],
         "params": [
           {
             "name": "e",
-            "type": null
-          },
-          {
-            "name": "data",
             "type": null
           }
         ],
@@ -173,28 +161,6 @@
         "description": "Change handler",
         "defaultValue": {
           "value": "() => {}",
-          "computed": false
-        }
-      },
-      "handleSelector": {
-        "type": {
-          "name": "string"
-        },
-        "required": false,
-        "description": "Select for drag handler",
-        "defaultValue": {
-          "value": "null",
-          "computed": false
-        }
-      },
-      "cancelSelector": {
-        "type": {
-          "name": "string"
-        },
-        "required": false,
-        "description": "Select for cancel drag",
-        "defaultValue": {
-          "value": "''",
           "computed": false
         }
       }
