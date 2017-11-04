@@ -144,7 +144,7 @@ class TheTab extends React.Component {
     clearInterval(s.resizeTimer)
     clearTimeout(s.movingTimer)
 
-    for (const [event, handler] of s.touchHandlers.entries()) {
+    for (const [event, handler] of Object.entries(s.touchHandlers)) {
       s.inner.removeEventListener(event, handler)
     }
   }
