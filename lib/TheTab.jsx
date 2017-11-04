@@ -11,6 +11,15 @@ import Draggable from 'react-draggable'
 import chopcal from 'chopcal'
 import { htmlAttributesFor, eventHandlersFor } from 'the-component-util'
 
+const pointFromTouchEvent = (e) => {
+  const [touch] = e.changedTouches || []
+  if (!touch) {
+    return null
+  }
+  const {clientX: x, clientY: y} = touch
+  return {x, y}
+}
+
 /**
  * Tab for the-components
  */
@@ -19,36 +28,41 @@ class TheTab extends React.Component {
     super(props)
     const s = this
     s.state = {
-      draggingPosition: null,
       animating: false,
       bodyHeight: 'auto',
       nextIndex: props.activeIndex || 0,
-      movingRate: 0
+      movingRate: 0,
+      translateX: 0
     }
     s.body = null
     s.contentWraps = []
     s.movingTimer = -1
     s.resizeTimer = -1
+
+    s.touchHandlers = {
+      'touchstart': s.handleTouchStart.bind(s),
+      'touchmove': s.handleTouchMove.bind(s),
+      'touchend': s.handleTouchEnd.bind(s)
+    }
+
   }
 
   render () {
     const s = this
     const {props, state, body} = s
     const {
-      draggingPosition,
       animating,
       bodyHeight,
       nextIndex,
-      movingRate
+      movingRate,
+      translateX
     } = state
     const {
       className,
       children,
       buttons,
       activeIndex,
-      onChange,
-      handleSelector,
-      cancelSelector
+      onChange
     } = props
     const count = buttons.length
     return (
@@ -71,38 +85,31 @@ class TheTab extends React.Component {
              ref={(body) => { s.body = body }}
              style={{height: bodyHeight}}
         >
-          <Draggable axis='x'
-                     position={draggingPosition}
-                     onStart={(e, data) => s.handleDragStart(e, data)}
-                     onDrag={(e, data) => s.handleDragDrag(e, data)}
-                     onStop={(e, data) => s.handleDragStop(e, data)}
-                     bounds={s.getBounds()}
-                     handle={handleSelector}
-                     cancel={cancelSelector}
+          <div className={c('the-tab-body-inner', {
+            'the-tab-body-inner-animating': animating,
+          })}
+               style={{
+                 left: `${activeIndex * -100}%`,
+                 width: `${count * 100}%`,
+                 transform: `translateX(${translateX}px)`
+               }}
+               ref={(inner) => { s.inner = inner }}
+
           >
-            <div className={c('the-tab-body-inner', {
-              'the-tab-body-inner-animating': animating,
-            })}
-                 style={{
-                   left: `${activeIndex * -100}%`,
-                   width: `${count * 100}%`
-                 }}
-            >
-              {
-                React.Children.map(children, (child, i) => (
-                  <div key={i}
-                       ref={(contentWrap) => {s.contentWraps[i] = contentWrap}}
-                       className={c('the-tab-content-wrap', {
-                         'the-tab-content-wrap-active': i === activeIndex
-                       })}
-                       style={{width: `${Math.ceil(100 / count)}%`}}
-                  >
-                    {child}
-                  </div>
-                ))
-              }
-            </div>
-          </Draggable>
+            {
+              React.Children.map(children, (child, i) => (
+                <div key={i}
+                     ref={(contentWrap) => {s.contentWraps[i] = contentWrap}}
+                     className={c('the-tab-content-wrap', {
+                       'the-tab-content-wrap-active': i === activeIndex
+                     })}
+                     style={{width: `${Math.ceil(100 / count)}%`}}
+                >
+                  {child}
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     )
@@ -111,8 +118,11 @@ class TheTab extends React.Component {
   componentDidMount () {
     const s = this
     s.resize(s.props.activeIndex)
-
     s.resizeTimer = setInterval(() => s.resize(s.state.nextIndex), 300)
+
+    for (const [event, handler] of Object.entries(s.touchHandlers)) {
+      s.inner.addEventListener(event, handler)
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -131,6 +141,10 @@ class TheTab extends React.Component {
     const s = this
     clearInterval(s.resizeTimer)
     clearTimeout(s.movingTimer)
+
+    for (const [event, handler] of s.touchHandlers.entries()) {
+      s.inner.removeEventListener(event, handler)
+    }
   }
 
   resize (activeIndex) {
@@ -156,50 +170,60 @@ class TheTab extends React.Component {
     return bounds
   }
 
-  handleDragStart (e, data) {
+  handleTouchStart (e) {
     const s = this
-    const {onDragStart} = s.props
+    s.touchPoint = pointFromTouchEvent(e)
     clearTimeout(s.movingTimer)
     s.setState({
       nextIndex: s.props.activeIndex,
-      draggingPosition: null,
       animating: false
     })
-    onDragStart && onDragStart(e, data)
   }
 
-  handleDragDrag (e, data) {
-    const s = this
-    const {onDrag} = s.props
-    const {body} = s
-    if (!body) {
-      return
-    }
-    const {activeIndex} = s.props
-    const {x} = data
-    const amount = s.movingAmountFor(x)
-    const nextIndex = activeIndex + amount
-    if (s.state.nextIndex !== nextIndex) {
-      s.resize(nextIndex)
-      s.setState({nextIndex})
-    }
-
-    const movingRate = s.movingRateFor(x)
-    if (s.state.movingRate !== movingRate) {
-      s.setState({movingRate})
-    }
-    onDrag && onDrag(e, data)
-  }
-
-  handleDragStop (e, data) {
+  handleTouchMove (e) {
     const s = this
     const {body} = s
     if (!body) {
       return
     }
-    const {onDragStop} = s.props
-    const {x} = data
-    const amount = s.movingAmountFor(x)
+    const point = pointFromTouchEvent(e)
+    if (!s.touchPoint) {
+      s.touchPoint = point
+      return
+    }
+    const vx = point.x - s.touchPoint.x
+    const vy = point.y - s.touchPoint.y
+    const avy = Math.abs(vy)
+    const avx = Math.abs(vx)
+    let isHorizontal = avy < 20 && avy < avx
+    if (isHorizontal) {
+      const {activeIndex} = s.props
+      const translateX = s.state.translateX + vx
+      s.setState({translateX})
+
+      const amount = s.movingAmountFor(translateX)
+      const nextIndex = activeIndex + amount
+      if (s.state.nextIndex !== nextIndex) {
+        s.resize(nextIndex)
+        s.setState({nextIndex})
+      }
+
+      const movingRate = s.movingRateFor(translateX)
+      if (s.state.movingRate !== movingRate) {
+        s.setState({movingRate})
+      }
+    }
+    s.touchPoint = point
+  }
+
+  handleTouchEnd (e) {
+    const s = this
+    const {body} = s
+    if (!body) {
+      return
+    }
+    const {translateX} = s.state
+    const amount = s.movingAmountFor(translateX)
     const {activeIndex, onChange} = s.props
     const toLeft = amount < 0
     if (toLeft) {
@@ -216,8 +240,7 @@ class TheTab extends React.Component {
       return
     }
     s.moveTo(0)
-
-    onDragStop && onDragStop(e, data)
+    s.touchPoint = null
   }
 
   moveTo (x, callback) {
@@ -226,12 +249,12 @@ class TheTab extends React.Component {
     clearTimeout(s.movingTimer)
     s.setState({
       movingRate: 0,
-      draggingPosition: {x, y: 0}
+      translateX: x
     })
     s.movingTimer = setTimeout(() => {
       s.setState({
         animating: false,
-        draggingPosition: {x: 0, y: 0}
+        translateX: 0
       })
       callback && callback()
     }, 300)
@@ -310,19 +333,13 @@ TheTab.propTypes = {
   /** Tab buttons */
   buttons: PropTypes.arrayOf(PropTypes.node),
   /** Change handler */
-  onChange: PropTypes.func,
-  /** Select for drag handler */
-  handleSelector: PropTypes.string,
-  /** Select for cancel drag */
-  cancelSelector: PropTypes.string
+  onChange: PropTypes.func
 }
 
 TheTab.defaultProps = {
   activeIndex: 0,
   buttons: [],
-  onChange: () => {},
-  handleSelector: null,
-  cancelSelector: ''
+  onChange: () => {}
 }
 
 TheTab.displayName = 'TheTab'

@@ -40,18 +40,21 @@ TheTabStyle.data = (options) => {
       display: 'flex',
       alignItems: 'center',
       width: '100%',
-      overflow: 'auto',
+      overflowX: 'auto',
       boxSizing: 'border-box',
-      padding: '0'
+      padding: '0 0 24px',
+      marginBottom: '-24px',
+      flexWrap: 'nowrap'
     },
     '.the-tab-body': {
       position: 'relative',
       width: '100%',
-      overflow: 'hidden',
+      overflowX: 'hidden',
       boxSizing: 'border-box',
       border: `1px solid ${lightBorderColor}`,
       backgroundColor,
-      transition: 'height 300ms'
+      transition: 'height 300ms',
+      zIndex: 2
     },
     '.the-tab-body-inner': {
       display: 'flex',
@@ -67,7 +70,8 @@ TheTabStyle.data = (options) => {
       }
     },
     '.the-tab-content-wrap': {
-      width: '100%'
+      width: '100%',
+      flexShrink: 0
     },
     '.the-tab-content': {
       width: '100%',

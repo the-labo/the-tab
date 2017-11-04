@@ -99,7 +99,7 @@ class ExampleComponent extends React.PureComponent {
         <TheTabStyle/>
         <TheTab activeIndex={s.state.activeIndex}
                 onChange={({activeIndex}) => s.setState({activeIndex})}
-                buttons={['Tab01', 'Tab02', 'Tab03']}
+                buttons={['Tab01', 'Tab02', 'Tab03', 'Tab04']}
         >
           <TheTab.Content style={{height: '100px'}}> This is Content 01 </TheTab.Content>
           <TheTab.Content style={{height: '300px'}}>
@@ -109,6 +109,10 @@ class ExampleComponent extends React.PureComponent {
           </TheTab.Content>
           <TheTab.Content spinning>
             This is Content 03
+
+          </TheTab.Content>
+          <TheTab.Content>
+            This is Content 04
 
           </TheTab.Content>
         </TheTab>
