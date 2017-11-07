@@ -49,7 +49,7 @@ TheTabStyle.data = (options) => {
     '.the-tab-body': {
       position: 'relative',
       width: '100%',
-      overflowX: 'hidden',
+      overflow: 'hidden',
       boxSizing: 'border-box',
       border: `1px solid ${lightBorderColor}`,
       backgroundColor,
