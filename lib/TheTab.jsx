@@ -37,34 +37,32 @@ const sourceElementScrollFor = (e) => {
 class TheTab extends React.Component {
   constructor (props) {
     super(props)
-    const s = this
-    s.state = {
+    this.state = {
       animating: false,
       bodyHeight: 'auto',
       nextIndex: props.activeIndex || 0,
       movingRate: 0,
       translateX: 0
     }
-    s.header = null
-    s.body = null
-    s.buttons = {}
-    s.contentWraps = []
-    s.movingTimer = -1
-    s.resizeTimer = -1
-    s.touchedScroll = null
-    s.touchPoint = null
-    s.touchMoveCount = 0
-    s.touchHandlers = {
-      'touchstart': s.handleTouchStart.bind(s),
-      'touchmove': s.handleTouchMove.bind(s),
-      'touchend': s.handleTouchEnd.bind(s)
+    this.header = null
+    this.body = null
+    this.buttons = {}
+    this.contentWraps = []
+    this.movingTimer = -1
+    this.resizeTimer = -1
+    this.touchedScroll = null
+    this.touchPoint = null
+    this.touchMoveCount = 0
+    this.touchHandlers = {
+      'touchstart': this.handleTouchStart.bind(this),
+      'touchmove': this.handleTouchMove.bind(this),
+      'touchend': this.handleTouchEnd.bind(this)
     }
 
   }
 
   render () {
-    const s = this
-    const {props, state, body} = s
+    const {props, state, body} = this
     const {
       animating,
       bodyHeight,
@@ -86,7 +84,7 @@ class TheTab extends React.Component {
            className={c('the-tab', className)}
       >
         <div className='the-tab-header'
-             ref={(header) => { s.header = header }}>
+             ref={(header) => { this.header = header }}>
           {
             buttons.map((text, i) => (
               <TheTab.Button key={i}
@@ -98,7 +96,7 @@ class TheTab extends React.Component {
           }
         </div>
         <div className='the-tab-body'
-             ref={(body) => { s.body = body }}
+             ref={(body) => { this.body = body }}
              style={{height: bodyHeight}}
         >
           <div className={c('the-tab-body-inner', {
@@ -109,13 +107,13 @@ class TheTab extends React.Component {
                  width: `${count * 100}%`,
                  transform: `translateX(${translateX}px)`
                }}
-               ref={(inner) => { s.inner = inner }}
+               ref={(inner) => { this.inner = inner }}
 
           >
             {
               React.Children.map(children, (child, i) => (
                 <div key={i}
-                     ref={(contentWrap) => {s.contentWraps[i] = contentWrap}}
+                     ref={(contentWrap) => {this.contentWraps[i] = contentWrap}}
                      className={c('the-tab-content-wrap', {
                        'the-tab-content-wrap-active': i === activeIndex
                      })}
@@ -132,50 +130,44 @@ class TheTab extends React.Component {
   }
 
   componentDidMount () {
-    const s = this
-    s.resize(s.props.activeIndex)
-    s.resizeTimer = setInterval(() => s.resize(s.state.nextIndex), 300)
+    this.resize(this.props.activeIndex)
+    this.resizeTimer = setInterval(() => this.resize(this.state.nextIndex), 300)
 
-    for (const [event, handler] of Object.entries(s.touchHandlers)) {
-      s.inner.addEventListener(event, handler)
+    for (const [event, handler] of Object.entries(this.touchHandlers)) {
+      this.inner.addEventListener(event, handler)
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    const s = this
-    const {props} = s
-
+    const {props} = this
     const nextIndex = nextProps.activeIndex
     const updateNextIndex = (nextIndex === null) || (props.activeIndex !== nextIndex)
     if (updateNextIndex) {
-      s.setState({nextIndex})
-      s.resize(nextIndex)
+      this.setState({nextIndex})
+      this.resize(nextIndex)
     }
   }
 
   componentWillUnmount () {
-    const s = this
-    clearInterval(s.resizeTimer)
-    clearTimeout(s.movingTimer)
+    clearInterval(this.resizeTimer)
+    clearTimeout(this.movingTimer)
 
-    for (const [event, handler] of Object.entries(s.touchHandlers)) {
-      s.inner.removeEventListener(event, handler)
+    for (const [event, handler] of Object.entries(this.touchHandlers)) {
+      this.inner.removeEventListener(event, handler)
     }
   }
 
   resize (activeIndex) {
-    const s = this
-    const contentWrap = s.contentWraps[activeIndex]
+    const contentWrap = this.contentWraps[activeIndex]
     const bodyHeight = contentWrap && contentWrap.offsetHeight
-    const needsUpdateState = bodyHeight && (bodyHeight !== s.state.bodyHeight)
+    const needsUpdateState = bodyHeight && (bodyHeight !== this.state.bodyHeight)
     if (needsUpdateState) {
-      s.setState({bodyHeight})
+      this.setState({bodyHeight})
     }
   }
 
   getBounds () {
-    const s = this
-    const {activeIndex, buttons} = s.props
+    const {activeIndex, buttons} = this.props
     const bounds = {top: 0, bottom: 0}
     if (activeIndex === 0) {
       bounds.right = 20
@@ -187,103 +179,97 @@ class TheTab extends React.Component {
   }
 
   handleTouchStart (e) {
-    const s = this
-    const {header} = s
-    s.touchedScroll = sourceElementScrollFor(e)
-    s.touchPoint = pointFromTouchEvent(e)
-    s.touchMoveCount = 0
-    clearTimeout(s.movingTimer)
-    s.setState({
-      nextIndex: s.props.activeIndex,
+    const {header} = this
+    this.touchedScroll = sourceElementScrollFor(e)
+    this.touchPoint = pointFromTouchEvent(e)
+    this.touchMoveCount = 0
+    clearTimeout(this.movingTimer)
+    this.setState({
+      nextIndex: this.props.activeIndex,
       animating: false
     })
-    s.buttons = [
+    this.buttons = [
       ...header.querySelectorAll('.the-tab-button')
     ]
   }
 
   handleTouchMove (e) {
-    const s = this
-    const {header, buttons} = s
     const touchedScroll = sourceElementScrollFor(e)
-    const scrolled = s.touchedScroll.left !== touchedScroll.left
+    const scrolled = this.touchedScroll.left !== touchedScroll.left
     if (scrolled) {
       return
     }
-    s.touchedScroll = touchedScroll
-    const isFirstMove = s.touchMoveCount === 0
-    s.touchMoveCount++
+    this.touchedScroll = touchedScroll
+    const isFirstMove = this.touchMoveCount === 0
+    this.touchMoveCount++
     if (isFirstMove) {
       return
     }
 
     const point = pointFromTouchEvent(e)
-    if (!s.touchPoint) {
-      s.touchPoint = point
+    if (!this.touchPoint) {
+      this.touchPoint = point
       return
     }
-    const vx = point.x - s.touchPoint.x
-    const vy = point.y - s.touchPoint.y
+    const vx = point.x - this.touchPoint.x
+    const vy = point.y - this.touchPoint.y
     const avy = Math.abs(vy)
     const avx = Math.abs(vx)
     let isHorizontal = avy < 20 && avy < avx
     if (isHorizontal) {
-      const {activeIndex} = s.props
-      const translateX = s.state.translateX + vx
-      s.setState({translateX})
+      const {activeIndex} = this.props
+      const translateX = this.state.translateX + vx
+      this.setState({translateX})
 
-      const amount = s.movingAmountFor(translateX)
+      const amount = this.movingAmountFor(translateX)
       const nextIndex = activeIndex + amount
 
-      if (s.state.nextIndex !== nextIndex) {
-        s.resize(nextIndex)
-        s.setState({nextIndex})
+      if (this.state.nextIndex !== nextIndex) {
+        this.resize(nextIndex)
+        this.setState({nextIndex})
       }
 
-      const movingRate = s.movingRateFor(translateX)
-      if (s.state.movingRate !== movingRate) {
-        s.setState({movingRate})
+      const movingRate = this.movingRateFor(translateX)
+      if (this.state.movingRate !== movingRate) {
+        this.setState({movingRate})
       }
     }
-    s.touchPoint = point
+    this.touchPoint = point
   }
 
   handleTouchEnd (e) {
-    const s = this
-    const {body} = s
-    const {translateX} = s.state
-    const amount = s.movingAmountFor(translateX)
-    const {activeIndex, onChange} = s.props
+    const {body} = this
+    const {translateX} = this.state
+    const amount = this.movingAmountFor(translateX)
+    const {activeIndex, onChange} = this.props
     const toLeft = amount < 0
     if (toLeft) {
-      s.moveTo(body.offsetWidth, () =>
+      this.moveTo(body.offsetWidth, () =>
         onChange({activeIndex: activeIndex - 1})
       )
       return
     }
     const toRight = amount > 0
     if (toRight) {
-      s.moveTo(body.offsetWidth * -1, () =>
+      this.moveTo(body.offsetWidth * -1, () =>
         onChange({activeIndex: activeIndex + 1})
       )
       return
     }
-    s.moveTo(0)
-    s.touchPoint = null
-    s.touchedScroll = null
+    this.moveTo(0)
+    this.touchPoint = null
+    this.touchedScroll = null
   }
 
   moveTo (x, callback) {
-    const s = this
-    const {header} = s
-    s.setState({animating: true})
-    clearTimeout(s.movingTimer)
-    s.setState({
+    this.setState({animating: true})
+    clearTimeout(this.movingTimer)
+    this.setState({
       movingRate: 0,
       translateX: x
     })
-    s.movingTimer = setTimeout(() => {
-      s.setState({
+    this.movingTimer = setTimeout(() => {
+      this.setState({
         animating: false,
         translateX: 0
       })
@@ -292,10 +278,9 @@ class TheTab extends React.Component {
   }
 
   movingAmountFor (x) {
-    const s = this
-    const {body} = s
+    const {body} = this
     const threshold = Math.min(80, body.offsetWidth / 2)
-    const {buttons, activeIndex} = s.props
+    const {buttons, activeIndex} = this.props
     const count = buttons.length
     const toLeft = (threshold < x) && (0 < activeIndex)
     if (toLeft) {
@@ -309,20 +294,18 @@ class TheTab extends React.Component {
   }
 
   movingRateFor (x) {
-    const s = this
-    const {body} = s
+    const {body} = this
     return chopcal.floor(x / body.offsetWidth, 0.001)
   }
 
   scrollHeader (amount) {
-    const s = this
-    if (s.headerScrolling) {
+    if (this.headerScrolling) {
       return
     }
-    s.headerScrolling = true
+    this.headerScrolling = true
     setTimeout(() => {
-      s.header.scrollLeft += amount
-      s.headerScrolling = false
+      this.header.scrollLeft += amount
+      this.headerScrolling = false
     }, 10)
   }
 
