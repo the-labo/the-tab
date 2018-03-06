@@ -84,10 +84,12 @@ class TheTab extends React.Component {
            className={c('the-tab', className)}
       >
         <div className='the-tab-header'
+             role='tablist'
              ref={(header) => { this.header = header }}>
           {
             buttons.map((text, i) => (
               <TheTab.Button key={i}
+                             role='tab'
                              onClick={() => onChange({activeIndex: i})}
                              active={nextIndex === i}
                              movingRate={activeIndex === i ? movingRate : 0}
@@ -114,6 +116,7 @@ class TheTab extends React.Component {
               React.Children.map(children, (child, i) => (
                 <div key={i}
                      ref={(contentWrap) => {this.contentWraps[i] = contentWrap}}
+                     role='tabpanel'
                      className={c('the-tab-content-wrap', {
                        'the-tab-content-wrap-active': i === activeIndex
                      })}
