@@ -1,8 +1,55 @@
 {
   "name": "the-tab",
-  "version": "3.0.7",
   "description": "Tab for the-components",
+  "version": "3.0.7",
+  "author": {
+    "name": "okunishinishi",
+    "email": "okunishinishi@gmail.com",
+    "url": "undefined"
+  },
+  "bugs": {
+    "url": "https://github.com/the-labo/the-tab/issues"
+  },
+  "dependencies": {
+    "asobj": "^2.1.0",
+    "chopcal": "^3.0.1",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.6.1",
+    "the-button": "^3.0.15",
+    "the-component-util": "^2.2.3",
+    "the-spin": "^3.1.0",
+    "the-style": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.0.0-beta.46",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2",
+    "the-component-demo": "^4.0.6",
+    "the-script-build": "^3.1.9",
+    "the-script-doc": "^1.0.2",
+    "the-script-release": "^1.0.6",
+    "the-script-share": "^1.0.5",
+    "the-script-test": "^2.1.1",
+    "the-script-update": "^2.0.0",
+    "the-templates": "^3.1.8"
+  },
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "homepage": "https://github.com/the-labo/the-tab#readme",
+  "keywords": [
+    "react-component",
+    "the"
+  ],
+  "license": "MIT",
   "main": "shim",
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16"
+  },
+  "repository": "the-labo/the-tab",
   "scripts": {
     "build": "the-script-build",
     "doc": "the-script-doc",
@@ -12,51 +59,5 @@
     "test": "the-script-test",
     "update": "the-script-update",
     "watch": "the-script-build -w"
-  },
-  "repository": "the-labo/the-tab",
-  "keywords": [
-    "the",
-    "react-component"
-  ],
-  "author": {
-    "name": "okunishinishi",
-    "email": "okunishinishi@gmail.com",
-    "url": "undefined"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/the-labo/the-tab/issues"
-  },
-  "homepage": "https://github.com/the-labo/the-tab#readme",
-  "dependencies": {
-    "asobj": "^2.0.2",
-    "chopcal": "^3.0.1",
-    "classnames": "^2.2.5",
-    "prop-types": "^15.6.0",
-    "the-button": "^3.0.1",
-    "the-component-util": "^2.1.0",
-    "the-spin": "^3.0.0",
-    "the-style": "^2.1.0"
-  },
-  "devDependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2",
-    "the-component-demo": "^4.0.1",
-    "the-script-build": "^2.0.1",
-    "the-script-doc": "^1.0.2",
-    "the-script-release": "^1.0.6",
-    "the-script-share": "^1.0.5",
-    "the-script-test": "^2.0.1",
-    "the-script-update": "^1.0.0",
-    "the-templates": "^2.1.11"
-  },
-  "peerDependencies": {
-    "react": ">=16",
-    "react-dom": ">=16"
-  },
-  "engines": {
-    "node": ">=8",
-    "npm": ">=4"
   }
 }

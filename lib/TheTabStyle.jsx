@@ -1,13 +1,13 @@
 'use strict'
 
-import React from 'react'
-import PropTypes from 'prop-types'
 import c from 'classnames'
-import TheStyle from 'the-style'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { asStyleData } from 'the-component-util'
+import TheStyle from 'the-style'
 
 /** Style for TheTab */
-const TheTabStyle = ({id, className, options}) => (
+const TheTabStyle = ({className, id, options}) => (
   <TheStyle {...{id}}
             className={c('the-tab-style', className)}
             styles={TheTabStyle.data(options)}
@@ -17,121 +17,121 @@ const TheTabStyle = ({id, className, options}) => (
 TheTabStyle.displayName = 'TheTabStyle'
 TheTabStyle.propTypes = {
   /** Style options */
-  options: PropTypes.object
+  options: PropTypes.object,
 }
 
 TheTabStyle.defaultProps = {
-  options: {}
+  options: {},
 }
 
 TheTabStyle.data = (options) => {
   const {ThemeValues} = TheStyle
   const {
-    textColor = ThemeValues.textColor,
-    lightBackgroundColor = ThemeValues.lightBackgroundColor,
     backgroundColor = ThemeValues.backgroundColor,
     dominantColor = ThemeValues.dominantColor,
+    lightBackgroundColor = ThemeValues.lightBackgroundColor,
+    lightBorderColor = ThemeValues.lightBorderColor,
     lightTextColor = ThemeValues.lightTextColor,
-    lightBorderColor = ThemeValues.lightBorderColor
+    textColor = ThemeValues.textColor,
   } = options
   return asStyleData('.the-tab', {
-    '&': {},
-    '.the-tab-header': {
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
-      overflowX: 'auto',
-      boxSizing: 'border-box',
-      padding: '0 0 24px',
-      marginBottom: '-24px',
-      flexWrap: 'nowrap'
-    },
     '.the-tab-body': {
-      position: 'relative',
-      width: '100%',
-      overflow: 'hidden',
-      boxSizing: 'border-box',
-      border: `1px solid ${lightBorderColor}`,
       backgroundColor,
+      border: `1px solid ${lightBorderColor}`,
+      boxSizing: 'border-box',
+      overflow: 'hidden',
+      position: 'relative',
       transition: 'height 300ms',
-      zIndex: 2
+      width: '100%',
+      zIndex: 2,
     },
     '.the-tab-body-inner': {
-      display: 'flex',
-      position: 'relative',
-      boxSizing: 'border-box',
-      alignItems: 'flex-start',
-      marginTop: '-1px',
-      '&.the-tab-body-inner-animating': {
-        transition: 'transform 300ms'
-      },
       '&.react-draggable-dragging': {
-        transition: 'none'
-      }
-    },
-    '.the-tab-content-wrap': {
-      width: '100%',
-      flexShrink: 0
-    },
-    '.the-tab-content': {
-      width: '100%',
-      border: `1px solid ${lightBorderColor}`,
-      marginRight: '-1px',
-      padding: '8px',
-      transition: 'height 300ms',
-      boxSizing: 'border-box',
-      borderTop: 'none',
-      borderBottom: 'none',
-      position: 'relative',
-      '&:first-child': {
-        borderLeft: 'none'
+        transition: 'none',
       },
-      '&:last-child': {
-        borderRight: 'none'
-      }
+      '&.the-tab-body-inner-animating': {
+        transition: 'transform 300ms',
+      },
+      alignItems: 'flex-start',
+      boxSizing: 'border-box',
+      display: 'flex',
+      marginTop: '-1px',
+      position: 'relative',
     },
     '.the-tab-button': {
-      fontSize: 'small',
-      padding: '12px 4px',
-      width: '100%',
-      backgroundColor,
-      margin: '0',
-      color: lightTextColor,
-      position: 'relative',
-      minHeight: '24px',
-      lineHeight: '1em',
-      cursor: 'pointer',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipses',
-      border: 'none',
-      borderRadius: 0,
-      boxShadow: 'none',
-      '&:hover': {
-        boxShadow: 'none',
-        color: textColor
+      '.the-tab-button-active-bar': {
+        background: dominantColor,
+        bottom: 0,
+        display: 'block',
+        height: '2px',
+        left: 0,
+        position: 'absolute',
+        right: 0,
+        transition: 'transform 100ms',
+        zIndex: 2,
       },
       '&:active': {
-        boxShadow: 'none'
+        boxShadow: 'none',
+      },
+      '&:hover': {
+        boxShadow: 'none',
+        color: textColor,
       },
       '&.the-tab-button-active': {
         color: dominantColor,
-        opacity: 1,
         cursor: 'default',
-        overflow: 'visible'
+        opacity: 1,
+        overflow: 'visible',
       },
-      '.the-tab-button-active-bar': {
-        position: 'absolute',
-        left: 0,
-        bottom: 0,
-        zIndex: 2,
-        right: 0,
-        height: '2px',
-        display: 'block',
-        background: dominantColor,
-        transition: 'transform 100ms'
-      }
-    }
+      backgroundColor,
+      border: 'none',
+      borderRadius: 0,
+      boxShadow: 'none',
+      color: lightTextColor,
+      cursor: 'pointer',
+      fontSize: 'small',
+      lineHeight: '1em',
+      margin: '0',
+      minHeight: '24px',
+      overflow: 'hidden',
+      padding: '12px 4px',
+      position: 'relative',
+      textOverflow: 'ellipses',
+      whiteSpace: 'nowrap',
+      width: '100%',
+    },
+    '.the-tab-content': {
+      '&:first-child': {
+        borderLeft: 'none',
+      },
+      '&:last-child': {
+        borderRight: 'none',
+      },
+      border: `1px solid ${lightBorderColor}`,
+      borderBottom: 'none',
+      borderTop: 'none',
+      boxSizing: 'border-box',
+      marginRight: '-1px',
+      padding: '8px',
+      position: 'relative',
+      transition: 'height 300ms',
+      width: '100%',
+    },
+    '.the-tab-content-wrap': {
+      flexShrink: 0,
+      width: '100%',
+    },
+    '.the-tab-header': {
+      alignItems: 'center',
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexWrap: 'nowrap',
+      marginBottom: '-24px',
+      overflowX: 'auto',
+      padding: '0 0 24px',
+      width: '100%',
+    },
+    '&': {},
   })
 }
 
