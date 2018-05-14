@@ -4,12 +4,28 @@
     "displayName": "TheTab",
     "methods": [
       {
-        "name": "resize",
+        "name": "Button",
         "docblock": null,
-        "modifiers": [],
+        "modifiers": [
+          "static"
+        ],
         "params": [
           {
-            "name": "activeIndex",
+            "name": "props",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "Content",
+        "docblock": null,
+        "modifiers": [
+          "static"
+        ],
+        "params": [
+          {
+            "name": "props",
             "type": null
           }
         ],
@@ -23,7 +39,7 @@
         "returns": null
       },
       {
-        "name": "handleTouchStart",
+        "name": "handleTouchEnd",
         "docblock": null,
         "modifiers": [],
         "params": [
@@ -47,7 +63,7 @@
         "returns": null
       },
       {
-        "name": "handleTouchEnd",
+        "name": "handleTouchStart",
         "docblock": null,
         "modifiers": [],
         "params": [
@@ -99,40 +115,24 @@
         "returns": null
       },
       {
+        "name": "resize",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "activeIndex",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
         "name": "scrollHeader",
         "docblock": null,
         "modifiers": [],
         "params": [
           {
             "name": "amount",
-            "type": null
-          }
-        ],
-        "returns": null
-      },
-      {
-        "name": "Button",
-        "docblock": null,
-        "modifiers": [
-          "static"
-        ],
-        "params": [
-          {
-            "name": "props",
-            "type": null
-          }
-        ],
-        "returns": null
-      },
-      {
-        "name": "Content",
-        "docblock": null,
-        "modifiers": [
-          "static"
-        ],
-        "params": [
-          {
-            "name": "props",
             "type": null
           }
         ],
