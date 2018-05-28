@@ -15,15 +15,15 @@
     "chopcal": "^3.0.1",
     "classnames": "^2.2.5",
     "prop-types": "^15.6.1",
-    "the-button": "^3.0.15",
+    "the-button": "^3.0.17",
     "the-component-util": "^2.2.3",
     "the-spin": "^3.1.0",
     "the-style": "^2.1.1"
   },
   "devDependencies": {
     "@babel/runtime": "^7.0.0-beta.46",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "the-component-demo": "^4.0.6",
     "the-script-build": "^3.1.9",
@@ -32,7 +32,7 @@
     "the-script-share": "^1.0.5",
     "the-script-test": "^2.1.1",
     "the-script-update": "^2.0.0",
-    "the-templates": "^3.1.8"
+    "the-templates": "^3.2.0"
   },
   "engines": {
     "node": ">=8",

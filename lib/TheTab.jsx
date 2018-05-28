@@ -165,6 +165,9 @@ class TheTab extends React.Component {
   }
 
   handleTouchMove (e) {
+    if (!this.touchedScroll) {
+      return
+    }
     const touchedScroll = sourceElementScrollFor(e)
     const scrolled = this.touchedScroll.left !== touchedScroll.left
     if (scrolled) {
@@ -314,8 +317,8 @@ class TheTab extends React.Component {
             {
               React.Children.map(children, (child, i) => (
                 <div className={c('the-tab-content-wrap', {
-                       'the-tab-content-wrap-active': i === activeIndex,
-                     })}
+                  'the-tab-content-wrap-active': i === activeIndex,
+                })}
                      key={i}
                      ref={(contentWrap) => {this.contentWraps[i] = contentWrap}}
                      role='tabpanel'
