@@ -33,6 +33,7 @@ TheTabStyle.data = (options) => {
     lightBorderColor = ThemeValues.lightBorderColor,
     lightTextColor = ThemeValues.lightTextColor,
     textColor = ThemeValues.textColor,
+    transitionDuration = 100,
   } = options
   return asStyleData('.the-tab', {
     '.the-tab-body': {
@@ -41,7 +42,7 @@ TheTabStyle.data = (options) => {
       boxSizing: 'border-box',
       overflow: 'hidden',
       position: 'relative',
-      transition: 'height 300ms',
+      transition: `height ${transitionDuration}`,
       width: '100%',
       zIndex: 2,
     },
@@ -50,7 +51,7 @@ TheTabStyle.data = (options) => {
         transition: 'none',
       },
       '&.the-tab-body-inner-animating': {
-        transition: 'transform 300ms',
+        transition: `transform ${transitionDuration}ms`,
       },
       alignItems: 'flex-start',
       boxSizing: 'border-box',
@@ -67,7 +68,7 @@ TheTabStyle.data = (options) => {
         left: 0,
         position: 'absolute',
         right: 0,
-        transition: 'transform 100ms',
+        transition: `transform ${transitionDuration}ms`,
         zIndex: 2,
       },
       '&:active': {
@@ -114,7 +115,7 @@ TheTabStyle.data = (options) => {
       marginRight: '-1px',
       padding: '8px',
       position: 'relative',
-      transition: 'height 300ms',
+      transition: `height ${transitionDuration}ms`,
       width: '100%',
     },
     '.the-tab-content-wrap': {
