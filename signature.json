@@ -165,6 +165,17 @@
           "computed": false
         }
       },
+      "enableTouchAction": {
+        "type": {
+          "name": "bool"
+        },
+        "required": false,
+        "description": "Whether to enable touch action",
+        "defaultValue": {
+          "value": "true",
+          "computed": false
+        }
+      },
       "onChange": {
         "type": {
           "name": "func"
