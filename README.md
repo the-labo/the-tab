@@ -154,6 +154,7 @@ Tab for the-components
 | --- | --- | ---- | ---- |
 | `activeIndex` | number  | Active tab index | `0` |
 | `buttons` | arrayOf node | Tab buttons | `[]` |
+| `disableTouchAction` | bool  | Disable touch action | `false` |
 | `onChange` | func  | Change handler | `() => {}` |
 
 ### TheTabStyle
