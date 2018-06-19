@@ -36,7 +36,7 @@ const sourceElementScrollFor = (e) => {
  */
 class TheTab extends React.Component {
   static Button (props) {
-    const {active, children, className, enableTouchAction, movingRate} = props
+    const {active, children, className, disableTouchAction, movingRate} = props
     const buttonProps = clone(props, {without: ['className', 'active']})
     return (
       <TheButton {...buttonProps}
@@ -46,7 +46,7 @@ class TheTab extends React.Component {
       >
         {active && (
           <span className='the-tab-button-active-bar'
-                style={active && {transform: enableTouchAction ? `translateX(${movingRate * -100}%)` : 'none'}}
+                style={active && {transform: !disableTouchAction ? `translateX(${movingRate * -100}%)` : 'none'}}
           />
         )}
         {children}
@@ -104,7 +104,7 @@ class TheTab extends React.Component {
     this.resize(this.props.activeIndex)
     this.resizeTimer = setInterval(() => this.resize(this.state.nextIndex), 300)
 
-    if (this.props.enableTouchAction) {
+    if (!this.props.disableTouchAction) {
       for (const [event, handler] of Object.entries(this.touchHandlers)) {
         this.inner.addEventListener(event, handler)
       }
@@ -279,7 +279,7 @@ class TheTab extends React.Component {
       buttons,
       children,
       className,
-      enableTouchAction,
+      disableTouchAction,
       onChange,
     } = props
     const count = buttons.length
@@ -312,7 +312,7 @@ class TheTab extends React.Component {
                ref={(inner) => { this.inner = inner }}
                style={{
                  left: `${activeIndex * -100}%`,
-                 transform: enableTouchAction ? `translateX(${translateX}px)` : 'none',
+                 transform: !disableTouchAction ? `translateX(${translateX}px)` : 'none',
                  width: `${count * 100}%`,
                }}
 
@@ -366,8 +366,8 @@ TheTab.propTypes = {
   activeIndex: PropTypes.number.isRequired,
   /** Tab buttons */
   buttons: PropTypes.arrayOf(PropTypes.node),
-  /** Whether to enable touch action */
-  enableTouchAction: PropTypes.bool,
+  /** Disable touch action */
+  disableTouchAction: PropTypes.bool,
   /** Change handler */
   onChange: PropTypes.func,
 }
@@ -375,7 +375,7 @@ TheTab.propTypes = {
 TheTab.defaultProps = {
   activeIndex: 0,
   buttons: [],
-  enableTouchAction: true,
+  disableTouchAction: false,
   onChange: () => {},
 }
 

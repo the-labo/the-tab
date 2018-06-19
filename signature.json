@@ -165,14 +165,14 @@
           "computed": false
         }
       },
-      "enableTouchAction": {
+      "disableTouchAction": {
         "type": {
           "name": "bool"
         },
         "required": false,
-        "description": "Whether to enable touch action",
+        "description": "Disable touch action",
         "defaultValue": {
-          "value": "true",
+          "value": "false",
           "computed": false
         }
       },
