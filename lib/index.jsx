@@ -9,7 +9,6 @@ import TheTab from './TheTab'
 import TheTabStyle from './TheTabStyle'
 
 export {
-  TheTab,
-  TheTabStyle,
+ TheTab,
+ TheTabStyle,
 }
-
