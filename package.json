@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "asobj": "^3.0.0",
-    "chopcal": "^3.0.1",
+    "chopcal": "^3.0.2",
     "classnames": "^2.2.6",
     "prop-types": "^15.6.2",
-    "the-button": "^3.0.24",
-    "the-component-util": "^3.0.2",
-    "the-spin": "^3.1.8",
+    "the-button": "^3.0.25",
+    "the-component-util": "^3.0.5",
+    "the-spin": "^3.1.9",
     "the-style": "^2.2.0"
   },
   "devDependencies": {
@@ -26,14 +26,14 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
-    "the-component-demo": "^4.0.14",
-    "the-script-build": "^4.0.3",
+    "the-component-demo": "^4.0.16",
+    "the-script-build": "^4.0.5",
     "the-script-doc": "^1.0.2",
     "the-script-release": "^1.0.6",
     "the-script-share": "^1.0.5",
-    "the-script-test": "^2.1.2",
+    "the-script-test": "^2.1.4",
     "the-script-update": "^2.0.0",
-    "the-templates": "^4.0.20"
+    "the-templates": "^4.0.24"
   },
   "engines": {
     "node": ">=8",
