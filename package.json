@@ -21,7 +21,7 @@
     "the-style": "^2.2.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.0.0-beta.51",
+    "@babel/runtime": "^7.0.0-rc.1",
     "ape-tmpl": "^6.0.10",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
