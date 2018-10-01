@@ -91,6 +91,7 @@ class TheTab extends React.Component {
     this.movingTimer = -1
     this.resizeTimer = -1
     this.touchedScroll = null
+    this.innerRef = React.createRef()
     this.touchPoint = null
     this.touchMoveCount = 0
     this.touchHandlers = {
@@ -101,12 +102,13 @@ class TheTab extends React.Component {
   }
 
   componentDidMount () {
+    const inner = this.innerRef.current
     this.resize(this.props.activeIndex)
     this.resizeTimer = setInterval(() => this.resize(this.state.nextIndex), 300)
 
     if (!this.props.disableTouchAction) {
       for (const [event, handler] of Object.entries(this.touchHandlers)) {
-        this.inner.addEventListener(event, handler)
+        inner && inner.addEventListener(event, handler)
       }
     }
   }
@@ -124,9 +126,10 @@ class TheTab extends React.Component {
   componentWillUnmount () {
     clearInterval(this.resizeTimer)
     clearTimeout(this.movingTimer)
+    const inner = this.innerRef.current
 
     for (const [event, handler] of Object.entries(this.touchHandlers)) {
-      this.inner.removeEventListener(event, handler)
+      inner && inner.removeEventListener(event, handler)
     }
   }
 
@@ -309,7 +312,7 @@ class TheTab extends React.Component {
           <div className={c('the-tab-body-inner', {
             'the-tab-body-inner-animating': animating,
           })}
-               ref={(inner) => { this.inner = inner }}
+               ref={this.innerRef}
                style={{
                  left: `${activeIndex * -100}%`,
                  transform: !disableTouchAction ? `translateX(${translateX}px)` : 'none',
