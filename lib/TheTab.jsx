@@ -328,7 +328,7 @@ class TheTab extends React.Component {
                      key={i}
                      ref={(contentWrap) => {this.contentWraps[i] = contentWrap}}
                      role='tabpanel'
-                     style={{width: `${Math.ceil(100 / count)}%`}}
+                     style={{width: `${Number(100 / count).toFixed(2)}%`}}
                 >
                   {child}
                 </div>
