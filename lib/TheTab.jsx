@@ -8,15 +8,14 @@ import React from 'react'
 import { TheButton } from 'the-button'
 import { eventHandlersFor, htmlAttributesFor } from 'the-component-util'
 import { TheSpin } from 'the-spin'
-import TheTabStyle from './TheTabStyle'
 
 const pointFromTouchEvent = (e) => {
   const [touch] = e.changedTouches || []
   if (!touch) {
     return null
   }
-  const {clientX: x, clientY: y} = touch
-  return {x, y}
+  const { clientX: x, clientY: y } = touch
+  return { x, y }
 }
 
 const sourceElementScrollFor = (e) => {
@@ -28,7 +27,7 @@ const sourceElementScrollFor = (e) => {
     top += target.scrollTop
     target = target.parentElement
   }
-  return {left, top}
+  return { left, top }
 }
 
 /**
@@ -36,8 +35,8 @@ const sourceElementScrollFor = (e) => {
  */
 class TheTab extends React.Component {
   static Button (props) {
-    const {active, children, className, disableTouchAction, movingRate} = props
-    const buttonProps = clone(props, {without: ['className', 'active']})
+    const { active, children, className, disableTouchAction, movingRate } = props
+    const buttonProps = clone(props, { without: ['className', 'active'] })
     return (
       <TheButton {...buttonProps}
                  className={c('the-tab-button', className, {
@@ -46,7 +45,7 @@ class TheTab extends React.Component {
       >
         {active && (
           <span className='the-tab-button-active-bar'
-                style={active && {transform: !disableTouchAction ? `translateX(${movingRate * -100}%)` : 'none'}}
+                style={active && { transform: !disableTouchAction ? `translateX(${movingRate * -100}%)` : 'none' }}
           />
         )}
         {children}
@@ -55,10 +54,10 @@ class TheTab extends React.Component {
   }
 
   static Content (props) {
-    const {children, className, spinning} = props
+    const { children, className, spinning } = props
     return (
-      <div {...htmlAttributesFor(props, {except: ['className', 'spinning']})}
-           {...eventHandlersFor(props, {except: []})}
+      <div {...htmlAttributesFor(props, { except: ['className', 'spinning'] })}
+           {...eventHandlersFor(props, { except: [] })}
            className={c('the-tab-content', className)}
       >
         {
@@ -114,11 +113,11 @@ class TheTab extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const {props} = this
+    const { props } = this
     const nextIndex = nextProps.activeIndex
     const updateNextIndex = (nextIndex === null) || (props.activeIndex !== nextIndex)
     if (updateNextIndex) {
-      this.setState({nextIndex})
+      this.setState({ nextIndex })
       this.resize(nextIndex)
     }
   }
@@ -134,8 +133,8 @@ class TheTab extends React.Component {
   }
 
   getBounds () {
-    const {activeIndex, buttons} = this.props
-    const bounds = {bottom: 0, top: 0}
+    const { activeIndex, buttons } = this.props
+    const bounds = { bottom: 0, top: 0 }
     if (activeIndex === 0) {
       bounds.right = 20
     }
@@ -146,21 +145,21 @@ class TheTab extends React.Component {
   }
 
   handleTouchEnd (e) {
-    const {body} = this
-    const {translateX} = this.state
+    const { body } = this
+    const { translateX } = this.state
     const amount = this.movingAmountFor(translateX)
-    const {activeIndex, onChange} = this.props
+    const { activeIndex, onChange } = this.props
     const toLeft = amount < 0
     if (toLeft) {
       this.moveTo(body.offsetWidth, () =>
-        onChange({activeIndex: activeIndex - 1})
+        onChange({ activeIndex: activeIndex - 1 })
       )
       return
     }
     const toRight = amount > 0
     if (toRight) {
       this.moveTo(body.offsetWidth * -1, () =>
-        onChange({activeIndex: activeIndex + 1})
+        onChange({ activeIndex: activeIndex + 1 })
       )
       return
     }
@@ -196,28 +195,28 @@ class TheTab extends React.Component {
     const avx = Math.abs(vx)
     let isHorizontal = avy < 20 && avy < avx
     if (isHorizontal) {
-      const {activeIndex} = this.props
+      const { activeIndex } = this.props
       const translateX = this.state.translateX + vx
-      this.setState({translateX})
+      this.setState({ translateX })
 
       const amount = this.movingAmountFor(translateX)
       const nextIndex = activeIndex + amount
 
       if (this.state.nextIndex !== nextIndex) {
         this.resize(nextIndex)
-        this.setState({nextIndex})
+        this.setState({ nextIndex })
       }
 
       const movingRate = this.movingRateFor(translateX)
       if (this.state.movingRate !== movingRate) {
-        this.setState({movingRate})
+        this.setState({ movingRate })
       }
     }
     this.touchPoint = point
   }
 
   handleTouchStart (e) {
-    const {header} = this
+    const { header } = this
     this.touchedScroll = sourceElementScrollFor(e)
     this.touchPoint = pointFromTouchEvent(e)
     this.touchMoveCount = 0
@@ -232,7 +231,7 @@ class TheTab extends React.Component {
   }
 
   moveTo (x, callback) {
-    this.setState({animating: true})
+    this.setState({ animating: true })
     clearTimeout(this.movingTimer)
     this.setState({
       movingRate: 0,
@@ -248,9 +247,9 @@ class TheTab extends React.Component {
   }
 
   movingAmountFor (x) {
-    const {body} = this
+    const { body } = this
     const threshold = Math.min(80, body.offsetWidth / 2)
-    const {activeIndex, buttons} = this.props
+    const { activeIndex, buttons } = this.props
     const count = buttons.length
     const toLeft = (threshold < x) && (0 < activeIndex)
     if (toLeft) {
@@ -264,12 +263,12 @@ class TheTab extends React.Component {
   }
 
   movingRateFor (x) {
-    const {body} = this
+    const { body } = this
     return chopcal.floor(x / body.offsetWidth, 0.001)
   }
 
   render () {
-    const {body, props, state} = this
+    const { body, props, state } = this
     const {
       animating,
       bodyHeight,
@@ -287,8 +286,8 @@ class TheTab extends React.Component {
     } = props
     const count = buttons.length
     return (
-      <div {...htmlAttributesFor(props, {except: ['className']})}
-           {...eventHandlersFor(props, {except: []})}
+      <div {...htmlAttributesFor(props, { except: ['className'] })}
+           {...eventHandlersFor(props, { except: [] })}
            className={c('the-tab', className)}
       >
         <div className='the-tab-header'
@@ -299,7 +298,7 @@ class TheTab extends React.Component {
               <TheTab.Button active={nextIndex === i}
                              key={i}
                              movingRate={activeIndex === i ? movingRate : 0}
-                             onClick={() => onChange({activeIndex: i})}
+                             onClick={() => onChange({ activeIndex: i })}
                              role='tab'
               >{text}</TheTab.Button>
             ))
@@ -307,7 +306,7 @@ class TheTab extends React.Component {
         </div>
         <div className='the-tab-body'
              ref={(body) => { this.body = body }}
-             style={{height: bodyHeight}}
+             style={{ height: bodyHeight }}
         >
           <div className={c('the-tab-body-inner', {
             'the-tab-body-inner-animating': animating,
@@ -328,7 +327,7 @@ class TheTab extends React.Component {
                      key={i}
                      ref={(contentWrap) => {this.contentWraps[i] = contentWrap}}
                      role='tabpanel'
-                     style={{width: `${Number(100 / count).toFixed(2)}%`}}
+                     style={{ width: `${Number(100 / count).toFixed(2)}%` }}
                 >
                   {child}
                 </div>
@@ -345,7 +344,7 @@ class TheTab extends React.Component {
     const bodyHeight = contentWrap && contentWrap.offsetHeight
     const needsUpdateState = bodyHeight && (bodyHeight !== this.state.bodyHeight)
     if (needsUpdateState) {
-      this.setState({bodyHeight})
+      this.setState({ bodyHeight })
     }
   }
 
@@ -359,10 +358,7 @@ class TheTab extends React.Component {
       this.headerScrolling = false
     }, 10)
   }
-
 }
-
-TheTab.Style = TheTabStyle
 
 TheTab.propTypes = {
   /** Active tab index */

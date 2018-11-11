@@ -7,8 +7,8 @@ import { asStyleData } from 'the-component-util'
 import { TheStyle } from 'the-style'
 
 /** Style for TheTab */
-const TheTabStyle = ({className, id, options}) => (
-  <TheStyle {...{id}}
+const TheTabStyle = ({ className, id, options }) => (
+  <TheStyle {...{ id }}
             className={c('the-tab-style', className)}
             styles={TheTabStyle.data(options)}
   />
@@ -25,7 +25,7 @@ TheTabStyle.defaultProps = {
 }
 
 TheTabStyle.data = (options) => {
-  const {ThemeValues} = TheStyle
+  const { ThemeValues } = TheStyle
   const {
     backgroundColor = ThemeValues.backgroundColor,
     dominantColor = ThemeValues.dominantColor,
