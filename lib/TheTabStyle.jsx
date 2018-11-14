@@ -35,7 +35,8 @@ TheTabStyle.data = (options) => {
     textColor = ThemeValues.textColor,
     transitionDuration = 100,
   } = options
-  return asStyleData('.the-tab', {
+  return asStyleData({
+    '.the-tab': {},
     '.the-tab-body': {
       backgroundColor,
       border: `1px solid ${lightBorderColor}`,
@@ -132,7 +133,6 @@ TheTabStyle.data = (options) => {
       padding: '0 0 24px',
       width: '100%',
     },
-    '&': {},
   })
 }
 
