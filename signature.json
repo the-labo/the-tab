@@ -137,6 +137,18 @@
           }
         ],
         "returns": null
+      },
+      {
+        "name": "shouldRenderChildForIndex",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "index",
+            "type": null
+          }
+        ],
+        "returns": null
       }
     ],
     "props": {
