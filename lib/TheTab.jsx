@@ -341,7 +341,7 @@ class TheTab extends React.Component {
                      role='tabpanel'
                      style={{ width: `${Number(100 / count).toFixed(2)}%` }}
                 >
-                  {child}
+                  {this.shouldRenderChildForIndex(i) ? child : null}
                 </div>
               ))
             }
@@ -369,6 +369,10 @@ class TheTab extends React.Component {
       this.header.scrollLeft += amount
       this.headerScrolling = false
     }, 10)
+  }
+
+  shouldRenderChildForIndex (index) {
+    return this.state.nextIndex === index || this.props.activeIndex === index
   }
 }
 
