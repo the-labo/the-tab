@@ -84,7 +84,8 @@ class TheTab extends React.Component {
       translateX: 0,
     }
     this.header = null
-    this.body = null
+    this.headerRef = React.createRef()
+    this.bodyRef = React.createRef()
     this.buttons = {}
     this.contentWraps = []
     this.movingTimer = -1
@@ -112,12 +113,14 @@ class TheTab extends React.Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentDidUpdate (prevProps) {
     const { props } = this
-    const nextIndex = nextProps.activeIndex
-    const updateNextIndex = (nextIndex === null) || (props.activeIndex !== nextIndex)
+    const nextIndex = props.activeIndex
+    const updateNextIndex = (nextIndex === null) || (prevProps.activeIndex !== nextIndex)
     if (updateNextIndex) {
-      this.setState({ nextIndex })
+      if (this.state.nextIndex !== nextIndex) {
+        this.setState({ nextIndex })
+      }
       this.resize(nextIndex)
     }
   }
@@ -145,7 +148,10 @@ class TheTab extends React.Component {
   }
 
   handleTouchEnd (e) {
-    const { body } = this
+    const body = this.bodyRef.current
+    if (!body) {
+      return
+    }
     const { translateX } = this.state
     const amount = this.movingAmountFor(translateX)
     const { activeIndex, onChange } = this.props
@@ -216,7 +222,7 @@ class TheTab extends React.Component {
   }
 
   handleTouchStart (e) {
-    const { header } = this
+    const header = this.headerRef.current
     this.touchedScroll = sourceElementScrollFor(e)
     this.touchPoint = pointFromTouchEvent(e)
     this.touchMoveCount = 0
@@ -247,7 +253,10 @@ class TheTab extends React.Component {
   }
 
   movingAmountFor (x) {
-    const { body } = this
+    const body = this.bodyRef.current
+    if (!body) {
+      return
+    }
     const threshold = Math.min(80, body.offsetWidth / 2)
     const { activeIndex, buttons } = this.props
     const count = buttons.length
@@ -263,7 +272,10 @@ class TheTab extends React.Component {
   }
 
   movingRateFor (x) {
-    const { body } = this
+    const body = this.bodyRef.current
+    if (!body) {
+      return
+    }
     return chopcal.floor(x / body.offsetWidth, 0.001)
   }
 
@@ -291,7 +303,7 @@ class TheTab extends React.Component {
            className={c('the-tab', className)}
       >
         <div className='the-tab-header'
-             ref={(header) => { this.header = header }}
+             ref={this.headerRef}
              role='tablist'>
           {
             buttons.map((text, i) => (
@@ -305,7 +317,7 @@ class TheTab extends React.Component {
           }
         </div>
         <div className='the-tab-body'
-             ref={(body) => { this.body = body }}
+             ref={this.bodyRef}
              style={{ height: bodyHeight }}
         >
           <div className={c('the-tab-body-inner', {

@@ -79,25 +79,23 @@ import { TheSpinStyle } from 'the-spin'
 class ExampleComponent extends React.PureComponent {
   constructor (props) {
     super(props)
-    const s = this
-    s.state = {
+    this.state = {
       activeIndex: 1
     }
   }
 
   render () {
-    const s = this
     return (
       <div>
         <TheButtonStyle/>
         <TheSpinStyle/>
         <TheTabStyle/>
-        <TheTab activeIndex={s.state.activeIndex}
-                onChange={({activeIndex}) => s.setState({activeIndex})}
+        <TheTab activeIndex={this.state.activeIndex}
+                onChange={({ activeIndex }) => this.setState({ activeIndex })}
                 buttons={['Tab01', 'Tab02', 'Tab03', 'Tab04']}
         >
-          <TheTab.Content style={{height: '100px'}}> This is Content 01 </TheTab.Content>
-          <TheTab.Content style={{height: '300px'}}>
+          <TheTab.Content style={{ height: '100px' }}> This is Content 01 </TheTab.Content>
+          <TheTab.Content style={{ height: '300px' }}>
             This is Content 02
             <br/>
             <a href="http://example.com">With some link</a>
@@ -110,7 +108,7 @@ class ExampleComponent extends React.PureComponent {
             This is Content 04
 
 
-            <div style={{overflow: 'auto', border: '2px solid #AAA'}}>
+            <div style={{ overflow: 'auto', border: '2px solid #AAA' }}>
               <div style={{
                 width: '1200px',
                 whiteSpace: 'nowrap',
